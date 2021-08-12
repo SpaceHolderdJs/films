@@ -100,6 +100,7 @@ header .link {
 
 .films input {
   border: none;
+  color: white;
   border-bottom: 1px solid white;
   background: none;
   outline: none;
