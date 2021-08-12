@@ -4,7 +4,7 @@ import Film from "./Film";
 
 import SearchIcon from "@material-ui/icons/Search";
 
-const Films = () => {
+const Films = ({ addToWatchList, removeFromWatchList }) => {
   const [searchVal, setSearchVal] = useState("");
   const [films, setFilms] = useState([]);
 
@@ -27,8 +27,6 @@ const Films = () => {
       });
   };
 
-  useEffect(() => {}, []);
-
   return (
     <div className="films column centered">
       <h3>Films</h3>
@@ -42,7 +40,12 @@ const Films = () => {
       <div className="films-wrapper row centered">
         {loading && <h1>Loading...</h1>}
         {films.map((film, i) => (
-          <Film key={i} film={film} />
+          <Film
+            key={i}
+            film={film}
+            addToWatchList={addToWatchList}
+            removeFromWatchList={removeFromWatchList}
+          />
         ))}
       </div>
     </div>

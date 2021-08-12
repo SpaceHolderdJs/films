@@ -4,31 +4,18 @@ import { Link } from "react-router-dom";
 import InfoIcon from "@material-ui/icons/Info";
 import CloseIcon from "@material-ui/icons/Close";
 import AddIcon from "@material-ui/icons/Add";
-import RemoveIcon from "@material-ui/icons/Remove";
+import RemoveIcon from "@material-ui/icons/RemoveRedEye";
 
-const Film = ({ film }) => {
+const Film = ({ film, addToWatchList, removeFromWatchList, clearList }) => {
   const { l, q, i, s, y, rank, id } = film;
 
   const [more, setMore] = useState(false);
-  const [watchList, setWatchList] = useState(
+
+  const [added, setAdded] = useState(
     localStorage.getItem("watchList")
-      ? JSON.parse(localStorage.getItem("watchList"))
-      : []
+      ? JSON.parse(localStorage.getItem("watchList")).find((e) => e.id === id)
+      : false
   );
-
-  useEffect(() => {
-    localStorage.setItem("watchList", JSON.stringify(watchList));
-  }, [watchList]);
-
-  const addToWatchList = (obj) => {
-    watchList.push(obj);
-    setWatchList(watchList);
-  };
-
-  const removeFromWatchList = (id) => {
-    setWatchList(watchList.filter((film) => film.id !== id));
-    localStorage.setItem("watchList", JSON.stringify(watchList));
-  };
 
   return (
     <div className="film column" style={{ background: `url(${i.imageUrl})` }}>
@@ -36,11 +23,12 @@ const Film = ({ film }) => {
         <div className="row" style={{ justifyContent: "space-between" }}>
           <h4>{l}</h4>
           <div className="row centered">
-            {!watchList.find((e) => e.id === id) ? (
+            {!added ? (
               <span
                 className="icon"
                 onClick={() => {
                   addToWatchList(film);
+                  setAdded(true);
                 }}>
                 <AddIcon />
               </span>
@@ -49,6 +37,8 @@ const Film = ({ film }) => {
                 className="icon"
                 onClick={() => {
                   removeFromWatchList(film);
+                  !clearList && setAdded(false);
+                  clearList && clearList(film);
                 }}>
                 <RemoveIcon />
               </span>
