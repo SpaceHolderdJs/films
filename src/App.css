@@ -143,6 +143,10 @@ header .link {
   justify-content: space-between;
 }
 
+.film .line * {
+  background: none;
+}
+
 .film .line .rank {
   height: 15px;
   border-radius: 10px;
@@ -154,6 +158,10 @@ header .link {
   width: 100%;
   height: 100vh;
   background: black;
+}
+
+.film-info * {
+  background: none;
 }
 
 .film-info img {
